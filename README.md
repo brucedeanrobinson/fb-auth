@@ -58,7 +58,14 @@ Features (build an app that implements the following)
 Step 1: Create the Basic App Structure
 
 - [x] Set up Express (or Elysia) server
-- [ ] Create two endpoints:
-  - [ ] GET /api/public - Returns: { message: "This is public information" }
-  - [ ] GET /api/protected - Returns: { message: "Only admin should be able to see this" }
-- [ ] Problem: Both endpoints are actually public! Anyone can access the "protected" one.
+- Create two endpoints:
+  - [x] GET /api/public - Returns: { message: "This is public information" }
+  - [x] GET /api/protected - Returns: { message: "Only admin should be able to see this" }
+- Problem: Both endpoints are actually public! Anyone can access the "protected" one.
+
+Step 2: Add API Documentation
+
+- [x] Add Swagger/OpenAPI documentation for both endpoints
+- [x] Serve interactive docs at /api-docs
+- [x] Document request/response schemas
+- [x] Test both endpoints through Swagger UI
