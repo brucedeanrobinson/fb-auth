@@ -1,46 +1,22 @@
-import swagger from "@elysiajs/swagger";
-import { Elysia, status } from "elysia";
+import { Elysia } from "elysia";
 
-const PORT = 3002
-
-// Simple API key store (use database in production)
-const validApiKeys = new Set(['api-key-123', 'api-key-456'])
-
-// add a system for issuing api key
-
-
-const protectedRoutes = new Elysia()
-  .derive({ as: 'local' }, (request) => {
-    return { user: { name: 'andrew', role: 'admin' }, isAuthenticated: true }
-  })
-  .onBeforeHandle({ as: 'local' }, (request) => {
-    const headers = request.headers
-    const apiKey = headers['x-api-key']
-
-    if (!apiKey) return status(401)
-
-    const isAuthenticated = validApiKeys.has(apiKey)
-
-    if (!isAuthenticated) return status(401)
-
-    if (request.user.role !== 'admin') return status(401)
-  })
-  .get('/protected', ({ user }) => {
-    return { message: 'access granted! now try /protected-with-context' }
-  })
-  .get('/protected-with-context', ({ user, isAuthenticated }) => {
-    return { message: 'Access granted!', user: user, authenticated: isAuthenticated }
-  })
-// .derive() // exists to add CONTEXT to requests.
+const PORT = 3002;
 
 const app = new Elysia()
-  .use(swagger())
-  .get('/', () => {
-    return { message: "this is public hello world" }
+  // Step 1: Create the two basic endpoints
+  .get('/api/public', () => {
+    return { message: "This is public information" };
   })
-  .use(protectedRoutes)
-  .listen(PORT)
+  .get('/api/protected', () => {
+    return { message: "Only admin should be able to see this" };
+  })
+  .listen(PORT);
 
 console.log(
   `🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`
 );
+console.log(`Try these endpoints:`);
+console.log(`  GET http://localhost:${PORT}/api/public`);
+console.log(`  GET http://localhost:${PORT}/api/protected`);
+
+export default app;
