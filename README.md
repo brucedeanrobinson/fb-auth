@@ -69,3 +69,12 @@ Step 2: Add API Documentation
 - [x] Serve interactive docs at /api-docs
 - [x] Document request/response schemas
 - [x] Test both endpoints through Swagger UI
+
+Step 3: Create User System
+
+- [x] Create an in-memory list of users with different roles:
+      const users = [
+      { id: 1, username: "admin", password: "admin123", role: "admin" },
+      { id: 2, username: "user", password: "user123", role: "basic" }
+      ];
+- Problem: How do we know which user is making the request to /api/protected?
